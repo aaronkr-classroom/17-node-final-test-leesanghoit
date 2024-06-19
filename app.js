@@ -102,7 +102,7 @@ const mongoose = require("mongoose"), // mongoose를 요청
   dbName = "ut-nodejs";
 
 // 데이터베이스 연결 설정
-mongoose.connect(`mongodb://127.0.0.1:27017/${dbName}`, {
+mongoose.connect(`mongodb+srv://ut-node:1234@ut-node.gq7g93s.mongodb.net/${dbName}`, {
   useNewUrlParser: true,
 });
 
@@ -201,6 +201,29 @@ router.delete(
 // 5. edit를 처리하기 위한 라우트          = GET /discussions/:id/edit,       edit 액션
 // 6. 편집 데이터의 처리와 결과            = PUT /discussions/:id/update,     update 액션, redirectView 뷰
 // 7. 삭제를 처리하기 위한 라우트          = DELETE /discussions/:id/delete,  delete 액션, redirectView 뷰
+
+/**
+ * Discussion
+ */
+router.get("/discussions", discussionsController.index, discussionsController.indexView);
+router.get("/discussions/new", discussionsController.new);
+router.post(
+  "/discussions/create",
+  discussionsController.create,
+  discussionsController.redirectView
+);
+router.get("/discussions/:id", discussionsController.show, discussionsController.showView);
+router.get("/discussions/:id/edit", discussionsController.edit);
+router.put(
+  "discussions/:id/update",
+  discussionsController.update,
+  discussionsController.redirectView
+);
+router.delete(
+  "/discussions/:id/delete",
+  discussionsController.delete,
+  discussionsController.redirectView
+);
 
 /**
  * Comments
